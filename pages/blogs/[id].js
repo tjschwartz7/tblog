@@ -61,7 +61,6 @@ export async function getStaticProps({ params }){
 
     if (isEmpty(data)) throw String("No data was found!");
 
-    data = JSON.parse(JSON.stringify(data));
   } catch (e) {
     error = e.toString();
   }
@@ -96,7 +95,6 @@ export async function getStaticPaths(){
 
       if (isEmpty(data)) throw String("No data was found!");
 
-      data = JSON.parse(JSON.stringify(data));
     } catch (e) {
       error = e.toString();
     }
