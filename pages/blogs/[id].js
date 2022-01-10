@@ -35,8 +35,33 @@ export default function Blog({ blog }){
 }
 
 export async function getStaticProps({ params }){
-  const req = await fetch('http://tblog.vercel.app/'+params.id);
-  const data = await req.json();
+  //const req = await fetch('http://tblog.vercel.app/'+params.id);
+
+  try {
+    const res = await fetch(
+      `http://tblog.vercel.app/ ${params.id}`,
+      {
+        method: "GET",
+        headers: {
+          // update with your user-agent
+          "User-Agent":
+            "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36",
+          Accept: "application/json; charset=UTF-8",
+        },
+      }
+    );
+
+    if (res.status !== 200)
+      throw String(`Invalid server response: ${res.status} ${res.statusText}`);
+
+  const data = await res.json();
+
+  if (isEmpty(data)) throw String("No data was found!");
+
+data = JSON.parse(JSON.stringify(data));
+} catch (e) {
+error = e.toString();
+}
 
   return{
     props: {blog: data},
@@ -44,8 +69,24 @@ export async function getStaticProps({ params }){
 }
 
 export async function getStaticPaths(){
-  const req = await fetch('http://tblog.vercel.app/blogs');
-  const data = await req.json();
+  //const req = await fetch('http://tblog.vercel.app/blogs');
+  try {
+    const res = await fetch(
+      'http://tblog.vercel.app/blogs',
+      {
+        method: "GET",
+        headers: {
+          // update with your user-agent
+          "User-Agent":
+            "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36",
+          Accept: "application/json; charset=UTF-8",
+        },
+      }
+    );
+
+    if (res.status !== 200)
+      throw String(`Invalid server response: ${res.status} ${res.statusText}`);
+  const data = await res.json();
 
   const paths = data.id.map(blog => {
     return { params: { id: blog.toString() } }
