@@ -3,11 +3,12 @@ import Link from 'next/link'
 import Head from 'next/head'
 import Nav from '../../components/Nav'
 import Left from '../../components/leftbox'
-import Center from '../../components/centerbox'
 import Right from '../../components/rightbox'
 import styles from '../../styles/Home.module.css'
 import json from '../../public/blogs.json'
 import { getSortedBlogsData } from '../../lib/Blogs'
+
+
 
 export default function Blogs(props){
 const { getSortedBlogsData } = props;
@@ -28,10 +29,11 @@ var suffix = '.json';
 <h2 style={{"text-align":"center"}}>Links</h2>
 <div className={styles.grid}>
 {props.allBlogData.map(({ id, title, data }) => (
-  <a href={prefix+id} className={styles.card}>
-    <h2 style={{"margin-left":"2vw"}}>{title}</h2>
-    <p>{data}</p>
-  </a>
+  <div className={styles.card}>
+  <Link href={"/"+id}>
+  <h2 style={{"margin-left":"2vw"}}>{title}</h2>
+  </Link>
+  </div>
 
 ))}
 </div>
