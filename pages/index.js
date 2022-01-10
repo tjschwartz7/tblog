@@ -1,69 +1,58 @@
+import { useRouter } from 'next/router'
+import Link from 'next/link'
 import Head from 'next/head'
-import Image from 'next/image'
+import Nav from '../components/Nav'
+import Left from '../components/leftbox'
+import Right from '../components/rightbox'
 import styles from '../styles/Home.module.css'
+import json from '../public/blogs.json'
+import { getSortedBlogsData } from '../lib/Blogs'
 
-export default function Home() {
-  return (
-    <div className={styles.container}>
-      <Head>
-        <title>TBONE</title>
-        <meta name="description" content="TBLOG" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          TBone's CSBlog
-        </h1>
 
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
+export default function Blogs(props){
+const { getSortedBlogsData } = props;
+var suffix = '.json';
 
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h2>Documentation &rarr;</h2>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
+  return(<>
+    <Head>
+      <title>TBlog</title>
+      <meta name='keywords' content='Computer Science, programming, projects'/>
+    </Head>
+    <Nav></Nav>
 
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h2>Learn &rarr;</h2>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
+<div style={{width:"100%", display:"flex", "background-color":"DarkSlateBlue"}}>
+<Left></Left>
+<div style={{width:"50%",height:"100vh", backgroundColor:"white",border:"3px solid black", "id":"links", marginTop:"2vh", marginBottom:"2vh"}}>
+<h1 style={{textAlign:"center"}}>TBlogs</h1>
+<h2 style={{textAlign:"center"}}>Links</h2>
+<div className={styles.grid}>
+{props.allBlogData.map(({ id, title, data }) => (
+  <div key={id} className={styles.card}>
+  <Link href={"/blogs/"+id}>
+  <h2 style={{marginLeft:"2vw"}}>{title}</h2>
+  </Link>
+  </div>
 
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h2>Examples &rarr;</h2>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
+))}
+</div>
+</div>
+<Right></Right>
 
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h2>Deploy &rarr;</h2>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
+</div>
 
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
-      </footer>
-    </div>
+    </>
+
+
   )
+}
+
+
+export async function getStaticProps() {
+  const allBlogData = getSortedBlogsData();
+  return {
+    props: {
+      allBlogData
+    }
+  }
 }

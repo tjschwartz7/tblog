@@ -3,7 +3,6 @@ import { useRouter } from 'next/router'
 import Head from 'next/head'
 import Nav from '../../components/Nav'
 import Left from '../../components/leftbox'
-import Center from '../../components/centerbox'
 import Right from '../../components/rightbox'
 import styles from '../../styles/Home.module.css'
 
@@ -20,9 +19,9 @@ export default function Blog({ blog }){
 
 <div style={{width:"100%", display:"flex", "background-color":"DarkSlateBlue"}}>
 <Left></Left>
-<div style={{width:"50%",height:"100vh", "background-color":"white","border":"3px solid black", "id":"links", "margin-top":"2vh", "margin-bottom":"2vh"}}>
-<h1 style={{"text-align":"center"}}>{blog.header}</h1>
-<p style={{"text-align":"center"}}>{blog.text}</p>
+<div style={{width:"50%",height:"100vh", backgroundColor:"white",border:"3px solid black", "id":"links", marginTop:"2vh", marginBottom:"2vh"}}>
+<h1 style={{textAlign:"center"}}>{blog.header}</h1>
+<p style={{textAlign:"center"}}>{blog.text}</p>
 </div>
 <Right></Right>
 
@@ -36,7 +35,7 @@ export default function Blog({ blog }){
 }
 
 export async function getStaticProps({ params }){
-  const req = await fetch('http://localhost:3000/'+params.id+'.json');
+  const req = await fetch('https://tblog-303bkwb0i-tjschwartz7.vercel.app/'+params.id+'.json');
   const data = await req.json();
 
   return{
@@ -45,7 +44,7 @@ export async function getStaticProps({ params }){
 }
 
 export async function getStaticPaths(){
-  const req = await fetch('http://localhost:3000/blogs.json');
+  const req = await fetch('https://tblog-303bkwb0i-tjschwartz7.vercel.app/blogs.json');
   const data = await req.json();
 
   const paths = data.id.map(blog => {

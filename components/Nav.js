@@ -1,12 +1,12 @@
 import { useRouter } from 'next/router'
-
+import Link from 'next/link'
 
 const Nav = () => {
   const router = useRouter()
   return (
-    <div style={{display:"flex",width:"100vw", 'background-color':"black"}}>
-    <div style = {{width:"auto", "margin-left":"20px"}}><p style = {{color:"white"}}><a href={'tblog.vercel.app'}>Home</a></p></div>
-    <div style = {{width:"auto", "margin-left":"20px"}}><p><a  href={'tblog.vercel.app'} style = {{color:"white"}}>Blogs</a></p></div>
+    <div style={{display:"flex",width:"100vw", backgroundColor:"black"}}>
+    <div style = {{width:"auto", marginLeft:"20px"}}><p style = {{color:"white"}}><Link href="/"><a>Home</a></Link></p></div>
+    <div style = {{width:"auto", marginLeft:"20px"}}><p style = {{color:"white"}}><Link href="/"><a>Blogs</a></Link></p></div>
     </div>
   )
 }
