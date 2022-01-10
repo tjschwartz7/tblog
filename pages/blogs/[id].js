@@ -35,7 +35,7 @@ export default function Blog({ blog }){
 }
 
 export async function getStaticProps({ params }){
-  const req = await fetch('https://tblog-303bkwb0i-tjschwartz7.vercel.app/'+params.id+'.json');
+  const req = await fetch('http://tblog.vercel.app/'+params.id+'.json');
   const data = await req.json();
 
   return{
@@ -44,7 +44,7 @@ export async function getStaticProps({ params }){
 }
 
 export async function getStaticPaths(){
-  const req = await fetch('https://tblog-303bkwb0i-tjschwartz7.vercel.app/blogs.json');
+  const req = await fetch('http://tblog.vercel.app/blogs.json');
   const data = await req.json();
 
   const paths = data.id.map(blog => {
