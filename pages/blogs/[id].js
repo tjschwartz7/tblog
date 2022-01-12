@@ -5,6 +5,7 @@ import Nav from '../../components/Nav'
 import Left from '../../components/leftbox'
 import Right from '../../components/rightbox'
 import styles from '../../styles/Home.module.css'
+import Link from 'next/link'
 
 export default function Blog({ blog }){
   const router = useRouter()
@@ -42,7 +43,7 @@ export async function getStaticProps({ params }){
   let error = "";
   try {
     const res = await fetch(
-      `http://tblog.vercel.app/ ${params.id}.json`,
+      `${process.env['PUBLIC_URL']}/${params.id}.json`,
       {
         method: "GET",
         headers: {
@@ -72,11 +73,12 @@ export async function getStaticProps({ params }){
 
 export async function getStaticPaths(){
   //const req = await fetch('http://tblog.vercel.app/blogs');
+  let thing = process.env['PUBLIC_URL'];
   let data = [];
   let error = "";
   try {
       const res = await fetch(
-        'http://tblog.vercel.app/blogs.json',
+        `${thing}/blogs.json`,
         //'http://localhost:3000/blogs',
         {
           method: "GET",
@@ -99,6 +101,8 @@ export async function getStaticPaths(){
     } catch (e) {
       error = e.toString();
     }
+  console.log(69);
+  console.log(`${thing}/blogs.json`);
   console.log(5);
   console.log(data);
   const paths = data.id.map(blog => {
