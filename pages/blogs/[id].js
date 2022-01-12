@@ -42,7 +42,7 @@ export async function getStaticProps({ params }){
   let error = "";
   try {
     const res = await fetch(
-      `http://tblog.vercel.app/ ${params.id}`,
+      `http://tblog.vercel.app/ ${params.id}.json`,
       {
         method: "GET",
         headers: {
@@ -76,7 +76,8 @@ export async function getStaticPaths(){
   let error = "";
   try {
       const res = await fetch(
-        'http://tblog.vercel.app/blogs',
+        'http://tblog.vercel.app/blogs.json',
+        //'http://localhost:3000/blogs',
         {
           method: "GET",
           headers: {
@@ -98,7 +99,8 @@ export async function getStaticPaths(){
     } catch (e) {
       error = e.toString();
     }
-
+  console.log(5);
+  console.log(data);
   const paths = data.id.map(blog => {
     return { params: { id: blog.toString() } }
   })
